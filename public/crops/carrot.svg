@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e8621a"/>
+      <stop offset="45%" stop-color="#f07028"/>
+      <stop offset="100%" stop-color="#c04c0c"/>
+    </linearGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="94" rx="18" ry="4" fill="#000" opacity="0.15"/>
+  <!-- green tops - feathery fronds -->
+  <path d="M42 18 Q36 8 30 4 Q35 12 40 20" fill="#3d6b28" opacity="0.9"/>
+  <path d="M46 16 Q42 4 40 0 Q44 8 48 18" fill="#4a7c2e"/>
+  <path d="M50 15 Q50 3 50 0 Q50 8 50 17" fill="#5a9e38"/>
+  <path d="M54 16 Q58 4 60 0 Q56 8 52 18" fill="#4a7c2e"/>
+  <path d="M58 18 Q64 8 70 4 Q65 12 60 20" fill="#3d6b28" opacity="0.9"/>
+  <path d="M44 17 Q38 10 34 6 Q39 13 43 20" fill="#5a9e38" opacity="0.7"/>
+  <path d="M56 17 Q62 10 66 6 Q61 13 57 20" fill="#5a9e38" opacity="0.7"/>
+  <!-- carrot body -->
+  <path d="M42 22 Q40 50 48 90 L52 90 Q60 50 58 22 Z" fill="url(#cg)"/>
+  <!-- highlight stripe -->
+  <path d="M48 24 Q46 50 48 82" stroke="#f5a050" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- ring markings -->
+  <path d="M43 38 Q50 36 57 38" stroke="#c04c0c" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M43 52 Q50 50 57 52" stroke="#c04c0c" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M44 66 Q50 64 56 66" stroke="#c04c0c" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M46 79 Q50 77 54 79" stroke="#c04c0c" stroke-width="1" fill="none" opacity="0.4"/>
+</svg>

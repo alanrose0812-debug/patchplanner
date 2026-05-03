@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="potg" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#c8a456"/>
+      <stop offset="55%" stop-color="#a07830"/>
+      <stop offset="100%" stop-color="#6a4e18"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="52" cy="92" rx="32" ry="6" fill="#000" opacity="0.18"/>
+  <!-- sprout 1 -->
+  <path d="M38 28 Q35 18 36 12 Q38 18 42 22 Q40 26 38 28" fill="#5a9e38"/>
+  <!-- sprout 2 -->
+  <path d="M58 32 Q60 22 62 16 Q60 22 56 26 Q57 29 58 32" fill="#4a8c2e"/>
+  <!-- main body -->
+  <ellipse cx="50" cy="58" rx="36" ry="28" fill="url(#potg)" transform="rotate(-8 50 58)"/>
+  <!-- earthy skin texture -->
+  <ellipse cx="50" cy="58" rx="36" ry="28" fill="none" stroke="#8a6020" stroke-width="0.5" stroke-dasharray="3,4" opacity="0.3" transform="rotate(-8 50 58)"/>
+  <!-- highlight -->
+  <ellipse cx="36" cy="46" rx="14" ry="9" fill="#d4b060" opacity="0.25" transform="rotate(-15 36 46)"/>
+  <!-- eyes / buds -->
+  <ellipse cx="36" cy="52" rx="3" ry="2" fill="#6a4e18" opacity="0.7"/>
+  <path d="M36 52 Q35 46 36 42" stroke="#5a9e38" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="60" cy="46" rx="3" ry="2" fill="#6a4e18" opacity="0.7"/>
+  <path d="M60 46 Q61 40 62 36" stroke="#4a8c2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="50" cy="68" rx="2.5" ry="2" fill="#6a4e18" opacity="0.6"/>
+  <ellipse cx="38" cy="65" rx="2" ry="1.5" fill="#6a4e18" opacity="0.5"/>
+  <ellipse cx="64" cy="62" rx="2" ry="1.5" fill="#6a4e18" opacity="0.5"/>
+  <!-- skin spots -->
+  <circle cx="44" cy="58" r="2" fill="#8a6020" opacity="0.25"/>
+  <circle cx="58" cy="62" r="1.8" fill="#8a6020" opacity="0.25"/>
+  <circle cx="42" cy="44" r="1.5" fill="#8a6020" opacity="0.2"/>
+</svg>

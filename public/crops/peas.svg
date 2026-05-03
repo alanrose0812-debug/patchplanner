@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="pg" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#7dbf4a"/>
+      <stop offset="100%" stop-color="#3d7820"/>
+    </radialGradient>
+    <radialGradient id="pea" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#a8d96a"/>
+      <stop offset="100%" stop-color="#5a9e30"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="94" rx="30" ry="4" fill="#000" opacity="0.15"/>
+  <!-- tendril -->
+  <path d="M72 28 Q82 18 78 10 Q74 18 80 22" stroke="#5a9e38" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- stem -->
+  <path d="M50 90 Q48 75 45 60 Q42 45 40 30" stroke="#4a7c2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- leaf -->
+  <ellipse cx="36" cy="42" rx="10" ry="6" fill="#3d6b28" transform="rotate(-30 36 42)"/>
+  <ellipse cx="60" cy="55" rx="10" ry="6" fill="#3d6b28" transform="rotate(20 60 55)"/>
+  <!-- pod body -->
+  <path d="M25 55 Q20 45 28 30 Q38 18 58 22 Q75 26 75 38 Q76 52 65 60 Q52 68 35 65 Q26 62 25 55 Z" fill="url(#pg)"/>
+  <!-- pod highlight -->
+  <path d="M30 35 Q45 20 60 25" stroke="#a8e060" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- peas inside (bumps) -->
+  <circle cx="36" cy="46" r="7" fill="url(#pea)" opacity="0.85"/>
+  <circle cx="48" cy="43" r="7.5" fill="url(#pea)" opacity="0.85"/>
+  <circle cx="60" cy="44" r="7" fill="url(#pea)" opacity="0.85"/>
+  <circle cx="36" cy="46" r="4" fill="#b8e87a" opacity="0.25"/>
+  <circle cx="48" cy="43" r="4" fill="#b8e87a" opacity="0.25"/>
+  <circle cx="60" cy="44" r="4" fill="#b8e87a" opacity="0.25"/>
+  <!-- pod seam -->
+  <path d="M25 55 Q38 54 50 52 Q62 50 75 48" stroke="#2d5a18" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>

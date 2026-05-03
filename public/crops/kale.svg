@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="kg" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#3d6b28"/>
+      <stop offset="100%" stop-color="#1a3a10"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="96" rx="22" ry="4" fill="#000" opacity="0.15"/>
+  <!-- stem -->
+  <path d="M50 94 Q50 80 50 68" stroke="#4a3a18" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- outer curly leaves -->
+  <path d="M50 70 Q28 60 18 38 Q24 34 30 38 Q32 52 50 62" fill="#1f4214"/>
+  <path d="M50 70 Q72 60 82 38 Q76 34 70 38 Q68 52 50 62" fill="#1f4214"/>
+  <!-- mid leaves -->
+  <path d="M50 66 Q30 52 22 30 Q30 26 36 32 Q38 48 50 58" fill="#2d5a1e"/>
+  <path d="M50 66 Q70 52 78 30 Q70 26 64 32 Q62 48 50 58" fill="#2d5a1e"/>
+  <!-- inner leaves curly -->
+  <path d="M50 62 Q34 46 30 22 Q38 18 44 26 Q44 44 50 54" fill="url(#kg)"/>
+  <path d="M50 62 Q66 46 70 22 Q62 18 56 26 Q56 44 50 54" fill="url(#kg)"/>
+  <!-- center bud -->
+  <path d="M50 56 Q44 42 46 28 Q50 22 54 28 Q56 42 50 56" fill="#4a7c2e"/>
+  <!-- vein highlights -->
+  <path d="M50 62 Q40 48 36 34" stroke="#5a9e38" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M50 62 Q60 48 64 34" stroke="#5a9e38" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- curly edge dots -->
+  <circle cx="20" cy="36" r="2" fill="#3d6b28" opacity="0.6"/>
+  <circle cx="80" cy="36" r="2" fill="#3d6b28" opacity="0.6"/>
+  <circle cx="22" cy="28" r="1.5" fill="#4a7c2e" opacity="0.6"/>
+  <circle cx="78" cy="28" r="1.5" fill="#4a7c2e" opacity="0.6"/>
+</svg>

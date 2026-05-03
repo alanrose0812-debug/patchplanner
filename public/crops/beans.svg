@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="beang" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ab030"/>
+      <stop offset="50%" stop-color="#4a8820"/>
+      <stop offset="100%" stop-color="#2d6010"/>
+    </linearGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="96" rx="26" ry="4" fill="#000" opacity="0.15"/>
+  <!-- stem -->
+  <path d="M30 20 Q35 15 40 18" stroke="#4a7c2e" stroke-width="2" fill="none"/>
+  <!-- leaves -->
+  <ellipse cx="28" cy="22" rx="12" ry="7" fill="#3d6b28" transform="rotate(-15 28 22)"/>
+  <path d="M28 22 Q24 16 22 12" stroke="#2d5a1e" stroke-width="1" fill="none"/>
+  <!-- bean pod - main -->
+  <path d="M38 20 Q28 35 26 55 Q26 72 35 82 Q42 90 50 90 Q58 90 62 82 Q68 72 68 55 Q68 35 62 22 Q55 15 48 18 Q42 18 38 20 Z" fill="url(#beang)"/>
+  <!-- highlight -->
+  <path d="M42 22 Q34 40 34 58 Q34 72 40 80" stroke="#8ad040" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.45"/>
+  <!-- bean bumps inside -->
+  <ellipse cx="50" cy="36" rx="7" ry="8" fill="#3a7018" opacity="0.5"/>
+  <ellipse cx="50" cy="52" rx="7.5" ry="8" fill="#3a7018" opacity="0.5"/>
+  <ellipse cx="50" cy="68" rx="7" ry="8" fill="#3a7018" opacity="0.5"/>
+  <!-- seam line -->
+  <path d="M62 22 Q68 40 68 58 Q66 74 58 82" stroke="#2d6010" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- tip -->
+  <path d="M50 90 Q52 95 52 98" stroke="#2d6010" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>

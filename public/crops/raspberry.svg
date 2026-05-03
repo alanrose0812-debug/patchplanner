@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="rg" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#e84060"/>
+      <stop offset="60%" stop-color="#c01830"/>
+      <stop offset="100%" stop-color="#800010"/>
+    </radialGradient>
+    <radialGradient id="rd" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#e85070"/>
+      <stop offset="100%" stop-color="#b02040"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="95" rx="24" ry="4" fill="#000" opacity="0.15"/>
+  <!-- stem -->
+  <path d="M50 22 Q50 16 50 10" stroke="#5a3a10" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- leaves -->
+  <path d="M50 24 Q36 16 28 20 Q36 22 42 30" fill="#3d6b28"/>
+  <path d="M50 24 Q64 16 72 20 Q64 22 58 30" fill="#4a7c2e"/>
+  <path d="M50 26 Q34 22 30 30 Q40 26 46 34" fill="#3d6b28" opacity="0.7"/>
+  <!-- sepals -->
+  <path d="M42 32 Q38 28 36 30 Q40 30 42 34" fill="#2d5a18"/>
+  <path d="M58 32 Q62 28 64 30 Q60 30 58 34" fill="#2d5a18"/>
+  <!-- drupelet rows - back -->
+  <circle cx="40" cy="56" r="8" fill="#900020" opacity="0.6"/>
+  <circle cx="52" cy="52" r="8" fill="#900020" opacity="0.6"/>
+  <circle cx="62" cy="58" r="7" fill="#900020" opacity="0.6"/>
+  <!-- drupelets main layer -->
+  <circle cx="36" cy="58" r="8" fill="url(#rg)"/>
+  <circle cx="50" cy="52" r="9" fill="url(#rd)"/>
+  <circle cx="64" cy="58" r="8" fill="url(#rg)"/>
+  <circle cx="36" cy="72" r="8" fill="url(#rg)"/>
+  <circle cx="50" cy="76" r="8.5" fill="url(#rd)"/>
+  <circle cx="64" cy="72" r="8" fill="url(#rg)"/>
+  <circle cx="43" cy="64" r="7" fill="url(#rd)"/>
+  <circle cx="57" cy="64" r="7" fill="url(#rd)"/>
+  <!-- highlights on drupelets -->
+  <circle cx="32" cy="54" r="3" fill="#fff" opacity="0.2"/>
+  <circle cx="46" cy="48" r="3" fill="#fff" opacity="0.2"/>
+  <circle cx="60" cy="54" r="3" fill="#fff" opacity="0.2"/>
+  <circle cx="32" cy="68" r="2.5" fill="#fff" opacity="0.18"/>
+  <circle cx="60" cy="68" r="2.5" fill="#fff" opacity="0.18"/>
+  <circle cx="46" cy="72" r="2.5" fill="#fff" opacity="0.18"/>
+  <!-- hollow center -->
+  <circle cx="50" cy="65" r="5" fill="#3a1a00" opacity="0.4"/>
+</svg>

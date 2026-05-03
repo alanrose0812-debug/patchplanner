@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="bbg" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#6a78c8"/>
+      <stop offset="55%" stop-color="#3a4a9e"/>
+      <stop offset="100%" stop-color="#1e2660"/>
+    </radialGradient>
+    <radialGradient id="bbs" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#8090e0"/>
+      <stop offset="100%" stop-color="#4a5ab0"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="96" rx="28" ry="4" fill="#000" opacity="0.15"/>
+  <!-- stem -->
+  <path d="M50 20 Q50 14 50 10" stroke="#5a7a2e" stroke-width="2.5" fill="none"/>
+  <!-- leaves -->
+  <ellipse cx="38" cy="22" rx="12" ry="6" fill="#3d6b28" transform="rotate(-20 38 22)"/>
+  <ellipse cx="62" cy="22" rx="12" ry="6" fill="#3d6b28" transform="rotate(20 62 22)"/>
+  <path d="M38 22 Q34 18 32 14" stroke="#4a7c2e" stroke-width="1" fill="none"/>
+  <path d="M62 22 Q66 18 68 14" stroke="#4a7c2e" stroke-width="1" fill="none"/>
+  <!-- berries cluster - back row -->
+  <circle cx="34" cy="60" r="16" fill="#2e3880" opacity="0.7"/>
+  <circle cx="66" cy="60" r="16" fill="#2e3880" opacity="0.7"/>
+  <!-- berries - main row -->
+  <circle cx="34" cy="60" r="15" fill="url(#bbg)"/>
+  <circle cx="66" cy="60" r="15" fill="url(#bbg)"/>
+  <circle cx="50" cy="52" r="16" fill="url(#bbs)"/>
+  <circle cx="50" cy="74" r="15" fill="url(#bbg)"/>
+  <!-- crown details (star-shaped top) -->
+  <path d="M34 48 Q32 44 30 46 Q34 44 36 48" fill="#1e2660" opacity="0.6"/>
+  <path d="M34 48 L34 44" stroke="#1e2660" stroke-width="1.5" opacity="0.6"/>
+  <path d="M66 48 L66 44" stroke="#1e2660" stroke-width="1.5" opacity="0.6"/>
+  <path d="M50 38 L50 34" stroke="#1e2660" stroke-width="1.5" opacity="0.6"/>
+  <path d="M50 62 L50 58" stroke="#1e2660" stroke-width="1.5" opacity="0.6"/>
+  <!-- crown stars -->
+  <circle cx="34" cy="46" r="3" fill="#1e2660" opacity="0.5"/>
+  <circle cx="66" cy="46" r="3" fill="#1e2660" opacity="0.5"/>
+  <circle cx="50" cy="37" r="3" fill="#1e2660" opacity="0.5"/>
+  <circle cx="50" cy="60" r="3" fill="#1e2660" opacity="0.5"/>
+  <!-- highlights -->
+  <ellipse cx="28" cy="54" rx="4" ry="5" fill="#fff" opacity="0.18"/>
+  <ellipse cx="44" cy="46" rx="4" ry="5" fill="#fff" opacity="0.18"/>
+  <ellipse cx="60" cy="54" rx="4" ry="5" fill="#fff" opacity="0.18"/>
+  <ellipse cx="44" cy="68" rx="4" ry="5" fill="#fff" opacity="0.15"/>
+</svg>

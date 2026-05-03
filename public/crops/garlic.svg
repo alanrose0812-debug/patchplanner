@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <radialGradient id="gg" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#f0ead8"/>
+      <stop offset="60%" stop-color="#d8ceb8"/>
+      <stop offset="100%" stop-color="#b0a090"/>
+    </radialGradient>
+    <radialGradient id="gc" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#e8e0cc"/>
+      <stop offset="100%" stop-color="#c0a890"/>
+    </radialGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="50" cy="94" rx="26" ry="5" fill="#000" opacity="0.15"/>
+  <!-- roots -->
+  <path d="M44 88 Q42 94 40 98" stroke="#9a8070" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M50 90 Q50 96 50 100" stroke="#9a8070" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M56 88 Q58 94 60 98" stroke="#9a8070" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M46 90 Q44 96 43 100" stroke="#9a8070" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M54 90 Q56 96 57 100" stroke="#9a8070" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- stem / scape -->
+  <path d="M50 22 Q50 15 52 10 Q54 5 55 2" stroke="#5a7a2e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- outer papery skin -->
+  <path d="M22 62 Q22 40 36 28 Q50 20 64 28 Q78 40 78 62 Q78 80 64 88 Q50 94 36 88 Q22 80 22 62 Z" fill="url(#gg)"/>
+  <!-- clove dividing lines -->
+  <path d="M50 22 Q50 50 50 88" stroke="#c0a890" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M36 28 Q38 55 38 86" stroke="#c0a890" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M64 28 Q62 55 62 86" stroke="#c0a890" stroke-width="1" fill="none" opacity="0.4"/>
+  <!-- left clove highlight -->
+  <path d="M24 58 Q26 40 38 30 Q32 52 30 66" fill="url(#gc)" opacity="0.5"/>
+  <!-- right clove highlight -->
+  <path d="M76 58 Q74 40 62 30 Q68 52 70 66" fill="url(#gc)" opacity="0.5"/>
+  <!-- purple tinge top -->
+  <path d="M38 26 Q50 20 62 26 Q50 24 38 26" fill="#c8a0c8" opacity="0.25"/>
+  <!-- papery lines texture -->
+  <path d="M30 45 Q50 40 70 45" stroke="#b0a090" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <path d="M26 58 Q50 53 74 58" stroke="#b0a090" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <path d="M28 70 Q50 65 72 70" stroke="#b0a090" stroke-width="0.8" fill="none" opacity="0.4"/>
+</svg>

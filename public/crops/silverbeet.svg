@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="sg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d5a1e"/>
+      <stop offset="100%" stop-color="#1a3a10"/>
+    </linearGradient>
+  </defs>
+  <!-- shadow -->
+  <ellipse cx="52" cy="95" rx="28" ry="4" fill="#000" opacity="0.15"/>
+  <!-- back leaf -->
+  <path d="M55 88 Q80 60 78 25 Q65 35 55 88" fill="#1f4214" opacity="0.6"/>
+  <!-- main leaf -->
+  <path d="M30 88 Q15 55 28 18 Q40 28 48 52 Q52 68 50 88 Z" fill="url(#sg)"/>
+  <path d="M50 88 Q58 68 62 52 Q70 28 72 18 Q85 55 70 88 Z" fill="#2d5a1e" opacity="0.85"/>
+  <!-- midrib (silver/white stem) -->
+  <path d="M50 88 Q50 55 50 20" stroke="#d0d8c0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <path d="M50 88 Q50 55 50 20" stroke="#e8ede0" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <!-- lateral veins left -->
+  <path d="M50 35 Q38 30 30 28" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 48 Q36 44 26 44" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 60 Q36 57 28 58" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 72 Q38 70 32 72" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <!-- lateral veins right -->
+  <path d="M50 35 Q62 30 70 28" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 48 Q64 44 74 44" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 60 Q64 57 72 58" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <path d="M50 72 Q62 70 68 72" stroke="#a8b898" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <!-- leaf edge crinkle -->
+  <path d="M28 18 Q22 30 18 45 Q17 60 22 75 Q32 88 50 88" stroke="#3d7028" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>
