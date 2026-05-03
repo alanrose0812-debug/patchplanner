@@ -246,6 +246,12 @@ function IconEdit() {
 function IconCopy() {
   return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
 }
+function IconBook() {
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+}
+function IconCalendar() {
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+}
 
 // ─── WEATHER CARD ─────────────────────────────────────────────────────────────
 function WeatherCard({ weather, loading, error, selectedCrops, region }: {
@@ -417,9 +423,10 @@ function BedMap({ bed }: { bed: Bed }) {
 }
 
 // ─── HOME TAB ─────────────────────────────────────────────────────────────────
-function HomeTab({ region, setRegion, householdSize, setHouseholdSize, selectedCrops, beds, weather, weatherLoading, weatherError }: {
+function HomeTab({ region, setRegion, householdSize, setHouseholdSize, selectedCrops, beds, weather, weatherLoading, weatherError, onExportCalendar }: {
   region: string; setRegion: (r: string) => void; householdSize: number; setHouseholdSize: (n: number) => void
   selectedCrops: string[]; beds: Bed[]; weather: WeatherData | null; weatherLoading: boolean; weatherError: string | null
+  onExportCalendar: () => void
 }) {
   const month = new Date().getMonth() + 1
   const tasks = MONTHLY_TASKS[month] || []
@@ -470,6 +477,12 @@ function HomeTab({ region, setRegion, householdSize, setHouseholdSize, selectedC
           </div>
         ))}
       </div>
+
+      {/* Calendar export */}
+      <button onClick={onExportCalendar} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '13px', borderRadius: 12, background: `linear-gradient(135deg, ${C.moss}, ${C.bark})`, border: `1px solid rgba(200,168,75,0.3)`, color: C.parchment, fontWeight: 600, fontSize: 13, marginBottom: 16 }}>
+        <IconCalendar/>
+        Export Planting Calendar (.ics)
+      </button>
 
       {/* Climate info */}
       <div style={{ background: C.bark, border: `1px solid ${C.cardBorder}`, borderRadius: 14, padding: '14px' }}>
@@ -973,14 +986,164 @@ function PatchTab({ beds, setBeds, selectedCrops }: {
   )
 }
 
+// ─── CALENDAR ICS EXPORT ──────────────────────────────────────────────────────
+function plantingMonthForCrop(crop: Crop): number | null {
+  // Southern-hemisphere NZ months
+  const map: Record<string, number> = {
+    'Summer': 10, 'Spring–Summer': 9, 'Spring': 8,
+    'Autumn–Winter': 3, 'Year-round': new Date().getMonth() + 1,
+    'Winter': 4, 'Spring–Autumn': 9,
+  }
+  return map[crop.season] ?? null
+}
+
+function generateICS(region: string, selectedCrops: string[]): string {
+  const now = new Date()
+  const lines: string[] = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0',
+    'PRODID:-//Patch Planner NZ//NONSGML v1.0//EN',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    `X-WR-CALNAME:Patch Planner NZ – ${region}`,
+  ]
+
+  // Monthly task events for next 3 months
+  for (let offset = 0; offset < 3; offset++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + offset, 1)
+    const month = d.getMonth() + 1
+    const year = d.getFullYear()
+    const tasks = MONTHLY_TASKS[month] || []
+    tasks.forEach((task, idx) => {
+      const ds = `${year}${String(month).padStart(2, '0')}01`
+      lines.push(
+        'BEGIN:VEVENT',
+        `UID:pp-task-${year}-${month}-${idx}@patchplanner.nz`,
+        `DTSTART;VALUE=DATE:${ds}`, `DTEND;VALUE=DATE:${ds}`,
+        `SUMMARY:🌱 ${task}`,
+        `DESCRIPTION:${region} garden task – Patch Planner NZ`,
+        'CATEGORIES:GARDENING', 'END:VEVENT',
+      )
+    })
+  }
+
+  // Crop planting reminders
+  selectedCrops.forEach(k => {
+    const crop = CROP_MAP[k]; if (!crop) return
+    const pm = plantingMonthForCrop(crop); if (!pm) return
+    const year = now.getMonth() + 1 > pm ? now.getFullYear() + 1 : now.getFullYear()
+    const ds = `${year}${String(pm).padStart(2, '0')}01`
+    lines.push(
+      'BEGIN:VEVENT',
+      `UID:pp-crop-${k}-${year}-${pm}@patchplanner.nz`,
+      `DTSTART;VALUE=DATE:${ds}`, `DTEND;VALUE=DATE:${ds}`,
+      `SUMMARY:Plant ${crop.name}`,
+      `DESCRIPTION:${crop.tip} | Spacing: ${crop.plantSpacingCm}cm | ${crop.frostSensitive ? 'Frost sensitive — plant after last frost.' : 'Frost tolerant.'}`,
+      'CATEGORIES:GARDENING,PLANTING', 'END:VEVENT',
+    )
+  })
+
+  lines.push('END:VCALENDAR')
+  return lines.join('\r\n')
+}
+
+// ─── JOURNAL TAB ──────────────────────────────────────────────────────────────
+function JournalTab({ entries, setEntries, selectedCrops }: {
+  entries: JournalEntry[]; setEntries: (e: JournalEntry[]) => void; selectedCrops: string[]
+}) {
+  const [text, setText] = useState('')
+  const [taggedCrops, setTaggedCrops] = useState<string[]>([])
+
+  const addEntry = () => {
+    if (!text.trim()) return
+    setEntries([{ id: newId(), date: new Date().toISOString(), text: text.trim(), crops: taggedCrops }, ...entries])
+    setText('')
+    setTaggedCrops([])
+  }
+
+  const toggleCrop = (key: string) =>
+    setTaggedCrops(prev => prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key])
+
+  return (
+    <div style={{ padding: '0 16px 100px' }}>
+      {/* New entry */}
+      <div style={{ background: C.bark, border: `1px solid ${C.cardBorder}`, borderRadius: 16, padding: '16px', marginBottom: 20 }}>
+        <div style={{ color: C.gold, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>New Entry</div>
+        <textarea
+          value={text} onChange={e => setText(e.target.value)}
+          placeholder="What happened in the garden today? Harvests, observations, problems, notes…"
+          style={{ width: '100%', background: C.bark2, border: `1px solid ${C.cardBorder}`, borderRadius: 10, color: C.cream, padding: '12px', fontSize: 13, resize: 'none', minHeight: 100, lineHeight: 1.6 }}
+        />
+        {selectedCrops.length > 0 && (
+          <div style={{ marginTop: 10 }}>
+            <div style={{ color: C.textMuted, fontSize: 10, marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Tag crops</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {selectedCrops.map(k => {
+                const c = CROP_MAP[k]; if (!c) return null
+                const on = taggedCrops.includes(k)
+                return (
+                  <button key={k} onClick={() => toggleCrop(k)} style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 10px', borderRadius: 20, background: on ? C.moss : C.bark2, border: `1px solid ${on ? C.leaf : C.cardBorder}`, color: on ? C.lime : C.textSecondary, fontSize: 11 }}>
+                    <img src={c.image} alt={c.name} style={{ width: 16, height: 16 }}/>
+                    {c.name}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+        <button onClick={addEntry} disabled={!text.trim()} style={{ marginTop: 12, width: '100%', padding: '11px', borderRadius: 10, background: !text.trim() ? C.bark2 : C.fern, color: !text.trim() ? C.textMuted : C.lime, fontWeight: 700, fontSize: 13, border: `1px solid ${!text.trim() ? C.cardBorder : C.leaf}` }}>
+          Save Entry
+        </button>
+      </div>
+
+      {/* Log */}
+      <div style={{ color: C.gold, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 12 }}>
+        Garden Log {entries.length > 0 && `(${entries.length})`}
+      </div>
+
+      {entries.length === 0 && (
+        <div style={{ color: C.textMuted, fontSize: 13, textAlign: 'center', padding: '40px 20px', fontStyle: 'italic', lineHeight: 1.7 }}>
+          No entries yet.<br/>Start recording your garden observations above.
+        </div>
+      )}
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {entries.map(entry => (
+          <div key={entry.id} style={{ background: C.bark, border: `1px solid ${C.cardBorder}`, borderRadius: 14, padding: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+              <div style={{ color: C.gold, fontSize: 11 }}>{fmtDate(entry.date)}</div>
+              <button onClick={() => setEntries(entries.filter(e => e.id !== entry.id))} style={{ background: 'rgba(192,64,64,0.1)', border: `1px solid rgba(192,64,64,0.2)`, borderRadius: 6, padding: '4px 6px', color: C.danger, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <IconTrash/>
+              </button>
+            </div>
+            <div style={{ color: C.parchment, fontSize: 13, lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>{entry.text}</div>
+            {entry.crops.length > 0 && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 10 }}>
+                {entry.crops.map(k => {
+                  const c = CROP_MAP[k]; if (!c) return null
+                  return (
+                    <span key={k} style={{ display: 'flex', alignItems: 'center', gap: 3, padding: '2px 8px', background: 'rgba(45,74,30,0.4)', border: `1px solid rgba(90,158,56,0.2)`, borderRadius: 12, fontSize: 10, color: C.sprout }}>
+                      <img src={c.image} alt={c.name} style={{ width: 12, height: 12 }}/>
+                      {c.name}
+                    </span>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
 export default function PatchPlannerApp() {
   const [hydrated, setHydrated] = useState(false)
-  const [activeTab, setActiveTab] = useState<'home' | 'crops' | 'care' | 'patch'>('home')
+  const [activeTab, setActiveTab] = useState<'home' | 'crops' | 'care' | 'patch' | 'journal'>('home')
   const [region, setRegion] = useState('Canterbury')
   const [householdSize, setHouseholdSize] = useState(2)
   const [selectedCrops, setSelectedCrops] = useState<string[]>(['tomato', 'silverbeet', 'carrot'])
   const [beds, setBeds] = useState<Bed[]>(DEFAULT_BEDS)
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([])
   const [weather, setWeather] = useState<WeatherData | null>(null)
   const [weatherLoading, setWeatherLoading] = useState(false)
   const [weatherError, setWeatherError] = useState<string | null>(null)
@@ -994,6 +1157,7 @@ export default function PatchPlannerApp() {
       if (saved.householdSize) setHouseholdSize(saved.householdSize)
       if (saved.selectedCrops) setSelectedCrops(saved.selectedCrops)
       if (saved.beds?.length) setBeds(saved.beds)
+      if (saved.journalEntries?.length) setJournalEntries(saved.journalEntries)
     }
     setHydrated(true)
   }, [])
@@ -1001,8 +1165,8 @@ export default function PatchPlannerApp() {
   // Persist to localStorage whenever state changes
   useEffect(() => {
     if (!hydrated) return
-    saveState({ region, householdSize, selectedCrops, beds })
-  }, [hydrated, region, householdSize, selectedCrops, beds])
+    saveState({ region, householdSize, selectedCrops, beds, journalEntries })
+  }, [hydrated, region, householdSize, selectedCrops, beds, journalEntries])
 
   // Fetch weather when region changes
   const fetchWeather = useCallback(async (reg: string) => {
@@ -1029,11 +1193,23 @@ export default function PatchPlannerApp() {
     fetchWeather(region)
   }, [region, hydrated, fetchWeather])
 
+  const handleExportCalendar = useCallback(() => {
+    const ics = generateICS(region, selectedCrops)
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `patch-planner-${region.toLowerCase().replace(/[\s/]+/g, '-')}.ics`
+    a.click()
+    URL.revokeObjectURL(url)
+  }, [region, selectedCrops])
+
   const tabs = [
     { key: 'home' as const, label: 'Home', icon: <IconHome/> },
     { key: 'crops' as const, label: 'Crops', icon: <IconSeed/> },
     { key: 'care' as const, label: 'Care', icon: <IconBug/> },
     { key: 'patch' as const, label: 'Patch', icon: <IconGrid/> },
+    { key: 'journal' as const, label: 'Journal', icon: <IconBook/> },
   ]
 
   const scrollAreaStyle: React.CSSProperties = { overflowY: 'auto', height: 'calc(100dvh - 120px)', paddingTop: 8 }
@@ -1066,7 +1242,7 @@ export default function PatchPlannerApp() {
       {/* Tab content */}
       <div style={scrollAreaStyle}>
         {activeTab === 'home' && (
-          <HomeTab region={region} setRegion={setRegion} householdSize={householdSize} setHouseholdSize={setHouseholdSize} selectedCrops={selectedCrops} beds={beds} weather={weather} weatherLoading={weatherLoading} weatherError={weatherError}/>
+          <HomeTab region={region} setRegion={setRegion} householdSize={householdSize} setHouseholdSize={setHouseholdSize} selectedCrops={selectedCrops} beds={beds} weather={weather} weatherLoading={weatherLoading} weatherError={weatherError} onExportCalendar={handleExportCalendar}/>
         )}
         {activeTab === 'crops' && (
           <CropsTab selectedCrops={selectedCrops} setSelectedCrops={setSelectedCrops} householdSize={householdSize}/>
@@ -1076,6 +1252,9 @@ export default function PatchPlannerApp() {
         )}
         {activeTab === 'patch' && (
           <PatchTab beds={beds} setBeds={setBeds} selectedCrops={selectedCrops}/>
+        )}
+        {activeTab === 'journal' && (
+          <JournalTab entries={journalEntries} setEntries={setJournalEntries} selectedCrops={selectedCrops}/>
         )}
       </div>
 

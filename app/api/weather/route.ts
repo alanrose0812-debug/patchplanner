@@ -52,24 +52,40 @@ interface WeatherData {
   stale?: boolean
 }
 
+// Typed shapes for OpenWeatherMap API responses
+interface OWMWeatherItem { id: number; description: string; icon: string }
+interface OWMForecastSlice {
+  dt: number
+  main: { temp: number; temp_min: number; temp_max: number; feels_like: number; humidity: number }
+  weather: OWMWeatherItem[]
+  wind: { speed: number }
+  pop: number
+}
+interface OWMCurrentResponse {
+  main: { temp: number; feels_like: number; humidity: number; temp_min: number; temp_max: number }
+  weather: OWMWeatherItem[]
+  wind: { speed: number }
+}
+interface OWMForecastResponse { list: OWMForecastSlice[] }
+
 // In-memory cache (survives across requests within same server process)
 const weatherCache: Record<string, { data: WeatherData; timestamp: number }> = {}
 const CACHE_TTL = 30 * 60 * 1000 // 30 minutes
 
-function processForecast(list: Record<string, unknown>[]): DayForecast[] {
-  const days: Record<string, Record<string, unknown>[]> = {}
+function processForecast(list: OWMForecastSlice[]): DayForecast[] {
+  const days: Record<string, OWMForecastSlice[]> = {}
   list.forEach((item) => {
-    const date = new Date((item.dt as number) * 1000).toISOString().split('T')[0]
+    const date = new Date(item.dt * 1000).toISOString().split('T')[0]
     if (!days[date]) days[date] = []
     days[date].push(item)
   })
 
   return Object.entries(days).map(([date, items]) => {
-    const temps = items.map((i) => (i.main as Record<string, number>).temp)
-    const pops = items.map((i) => (i.pop as number) || 0)
-    const winds = items.map((i) => (i.wind as Record<string, number>).speed || 0)
+    const temps = items.map((i) => i.main.temp)
+    const pops = items.map((i) => i.pop || 0)
+    const winds = items.map((i) => i.wind.speed || 0)
     const midItem = items[Math.floor(items.length / 2)]
-    const weather = (midItem.weather as Record<string, string>[])[0]
+    const weather = midItem.weather[0]
     return {
       date,
       high: Math.round(Math.max(...temps)),
@@ -77,7 +93,7 @@ function processForecast(list: Record<string, unknown>[]): DayForecast[] {
       description: weather.description,
       icon: weather.icon,
       rainProbability: Math.round(Math.max(...pops) * 100),
-      windSpeedKmh: Math.round((Math.max(...winds) * 3.6)),
+      windSpeedKmh: Math.round(Math.max(...winds) * 3.6),
     }
   })
 }
@@ -119,8 +135,8 @@ export async function GET(request: NextRequest) {
 
     if (!currentRes.ok || !forecastRes.ok) throw new Error('OpenWeatherMap API error')
 
-    const current = await currentRes.json()
-    const forecastRaw = await forecastRes.json()
+    const current = (await currentRes.json()) as OWMCurrentResponse
+    const forecastRaw = (await forecastRes.json()) as OWMForecastResponse
     const dailyForecasts = processForecast(forecastRaw.list)
 
     const data: WeatherData = {
