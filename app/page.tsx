@@ -1221,12 +1221,9 @@ export default function PatchPlannerApp() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {/* Logo mark */}
-            <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="18" fill={C.moss} stroke={C.gold} strokeWidth="1.5"/>
-              <path d="M20 30 Q16 20 18 10 Q20 8 22 10 Q24 20 20 30Z" fill={C.leaf}/>
-              <path d="M20 28 Q12 22 10 14 Q14 12 17 18 Q19 24 20 28Z" fill={C.sprout} opacity="0.8"/>
-              <path d="M20 28 Q28 22 30 14 Q26 12 23 18 Q21 24 20 28Z" fill={C.sprout} opacity="0.8"/>
-            </svg>
+            <div style={{ width: 40, height: 40, borderRadius: 10, overflow: 'hidden', background: '#fff', flexShrink: 0 }}>
+              <img src="/logo.png" alt="Patch Planner logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }}/>
+            </div>
             <div>
               <div style={{ color: C.gold, fontWeight: 700, fontSize: 16, letterSpacing: '0.01em', lineHeight: 1 }}>Patch Planner</div>
               <div style={{ color: C.textMuted, fontSize: 10, letterSpacing: '0.08em' }}>AOTEAROA NEW ZEALAND</div>
